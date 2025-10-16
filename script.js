@@ -7,10 +7,19 @@ function checkAnswers() {
   };
 
   let correctCount = 0;
+  let feedback = ""; // აქ მოვაწერთ კომენტარს
 
   for(let q in answers) {
     const sel = document.querySelector(`input[name="${q}"]:checked`);
-    if(sel && sel.value === answers[q]) correctCount++;
+    if(sel) {
+      if(sel.value === answers[q]) {
+        correctCount++;
+      } else {
+        feedback += `<p>${q}: არასწორი! სწორია: ${answers[q]}</p>`;
+      }
+    } else {
+      feedback += `<p>${q}: არ აირჩიეთ პასუხი! სწორია: ${answers[q]}</p>`;
+    }
   }
 
   // დაფაროს quiz
@@ -19,5 +28,5 @@ function checkAnswers() {
   // აჩვენოს შედეგი
   const resultDiv = document.getElementById("sedegi");
   resultDiv.style.display = "block";
-  resultDiv.innerText = `შენი ქულაა: ${correctCount}/20`;
+  resultDiv.innerHTML = `<h3>შენი ქულაა: ${correctCount}/20</h3>${feedback}`;
 }
